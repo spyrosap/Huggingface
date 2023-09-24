@@ -22,7 +22,7 @@ def img2text(url) :
 def generate_story(scenario) : 
     template = """""
     You are a story teller;
-    You can generate a short story based on a simple narrative, the story should be no more than 30 words:
+    You can generate a short story based on a simple narrative, the story should be no more than 150 words:
 
     CONTEXT: {scenario}
     STORY:
@@ -50,6 +50,15 @@ def text_to_speech (message) :
         file.write(response.content)
 
 
+def analyse_sentiment (message) :
+    classifier = pipeline("sentiment-analysis")
+    sentiment = classifier(message)[0]['label']
+    print(sentiment)
+    return message
+
+
+#main function
+
 def main(): 
     st.set_page_config(page_title="story_player", page_icon='🤩')
 
@@ -65,12 +74,15 @@ def main():
                  use_column_width = True)
         scenario = img2text(uploaded_file.name)
         story=generate_story(scenario)
+        mood=analyse_sentiment(story)
         text_to_speech(story)
 
         with st.expander("scenario") :
             st.write(scenario)
         with st.expander("story") : 
             st.write(story)
+        with st.expander("mood") :
+            st.write(mood)
 
         st.audio('amazingaudio.mp4')
 
