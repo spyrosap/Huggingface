@@ -80,9 +80,9 @@ def main():
         with st.expander("scenario") :
             st.write(scenario)
         with st.expander("story") : 
-            st.write(story)
+           st.write(story)
         with st.expander("mood") :
-            st.write(mood)
+           st.write(mood)
 
         st.audio('amazingaudio.mp4')
 
